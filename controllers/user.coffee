@@ -4,4 +4,4 @@
 #
 
 exports.list = (req, res)->
-  res.send "respond with a resource"
+  res.render 'user/user', {title: 'User'}

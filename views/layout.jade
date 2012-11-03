@@ -1,7 +1,9 @@
-doctype 5
+!!!
 html
   head
     title= title
     != css('style')
+    != js('jquery-1.8.2.min')
+    block head
   body
     block content

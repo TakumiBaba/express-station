@@ -24,6 +24,7 @@ app.configure ()->
 
 app.configure 'development', ()->
   app.use express.errorHandler()
+  app.locals.pretty = true
 
 require('../routes').setup(app)
 
