@@ -13,6 +13,17 @@ Start
 -----
 	$ npm start
 
+Production Evironment
+---------------------
+**Start**
+
+	$ npm install -g forever
+	$ npm start
+
+**Stop**
+
+	$ npm stop
+
 How To Edit
 -----------
 * `/routes.coffee` defines routes for controllers.
