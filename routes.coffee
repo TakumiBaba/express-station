@@ -6,4 +6,5 @@ exports.setup = (app)->
   )
   
   app.get '/', controllers["index"].index
+  app.get '/tweets.json', controllers["tweet"].list.json
   app.get '/users', controllers["user"].list

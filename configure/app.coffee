@@ -9,7 +9,8 @@ mongoose = require 'mongoose'
 http = require('http')
 path = require('path')
 assets = require('connect-assets')()
-config = require('./config.json');
+config = require('./config.json')
+models = require('../models')
 
 # Define express application
 app = express()
@@ -53,13 +54,22 @@ server = http.createServer(app).listen(app.get('port'), ()->
   console.log "Express server listening on port #{app.get('port')}";
 )
 
-
 # SocketIO
 io = require('socket.io').listen(server)
 io.sockets.on 'connection', (socket)->
   socket.on 'msg', (msg)->
-    io.sockets.emit 'msg',
-      name: msg.name
-      message: msg.message
+    # ユーザー名をDBから取得
+    user = models.User.findOrCreateByName(msg.name, (error, user)->
+      # ツィートを保存
+      tweet = models.Tweet(message: msg.message, user: user._id)
+      tweet.save (error)->
+        if error
+          console.warn error
+          console.error 'databse save error'
+        # ツィートを配信する
+        io.sockets.emit 'msg',
+          name: msg.name
+          message: msg.message
+    )
   socket.on 'disconnect', ()->
     console.info('disconnected')

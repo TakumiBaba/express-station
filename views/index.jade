@@ -13,9 +13,21 @@ block content
     br
     input(type='submit', value='送信')
   ul#stream
-    
+
   :coffeescript
     ($ document).ready ()=>
+      # Ajax Sample
+      $.ajax
+        type: 'GET'
+        url: '/tweets.json'
+        dataType: 'json'
+        success: (data)->
+          for tweet in data
+            console.log tweet
+            elem = ($ '<li />')
+            elem.text("【#{tweet.user.name}】 #{tweet.message}")
+            ($ '#stream').prepend(elem)
+      # SocketIO Sample
       @socket = window.io.connect();
       @socket.on 'connect', ()->
         socket.on 'msg', (tweet)->
