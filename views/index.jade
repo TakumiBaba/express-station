@@ -1,5 +1,35 @@
 extends layout
-
+block head
+  script(src='/socket.io/socket.io.js')
 block content
   h1= title
   p #{greedings} Welcome to #{title}
+  form#form(onsubmit="window.send(); return false;")
+    label(for='name') 名前
+    input#name(type='text')
+    br
+    label(for='message') メッセージ
+    input#message(type='text', autocomplete='off')
+    br
+    input(type='submit', value='送信')
+  ul#stream
+    
+  :coffeescript
+    ($ document).ready ()=>
+      @socket = window.io.connect();
+      @socket.on 'connect', ()->
+        socket.on 'msg', (tweet)->
+          elem = ($ '<li />')
+          elem.text("【#{tweet.name}】 #{tweet.message}")
+          ($ '#stream').prepend(elem)
+          elem.hide().fadeIn(200)
+      window.send = ()->
+        name = ($ '#name').val()
+        message = ($ '#message').val()
+        if name and message
+          socket.emit 'msg',
+            name: name
+            message: message
+          ($ '#message').val('')
+        else
+          window.alert '名前かメッセージが入力されていません。'

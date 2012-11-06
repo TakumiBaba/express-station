@@ -49,6 +49,17 @@ mongoose.connect app.settings.dbpath, (error) ->
 require('../routes').setup(app)
 
 # Start HTTP server
-http.createServer(app).listen(app.get('port'), ()->
+server = http.createServer(app).listen(app.get('port'), ()->
   console.log "Express server listening on port #{app.get('port')}";
 )
+
+
+# SocketIO
+io = require('socket.io').listen(server)
+io.sockets.on 'connection', (socket)->
+  socket.on 'msg', (msg)->
+    io.sockets.emit 'msg',
+      name: msg.name
+      message: msg.message
+  socket.on 'disconnect', ()->
+    console.info('disconnected')

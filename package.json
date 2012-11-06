@@ -10,6 +10,7 @@
     "express": "*",
     "connect-assets": "*",
     "mongoose": "*",
+    "socket.io": "*",
     "jade": "*",
     "less": "*",
     "coffee-script": "*",
