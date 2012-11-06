@@ -33,8 +33,8 @@ How To Edit
 * `/assets/js/*.cofffee` defines scripts for views written by CoffeeScript.
 * `/public/**/*` should be used to put static files.
 
-Documents
----------
+References
+----------
 * [node.js](http://nodejs.org/)
 * [express](http://expressjs.com/)
 * [Jade](http://jade-lang.com/)

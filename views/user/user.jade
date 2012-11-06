@@ -5,3 +5,7 @@ block head
 block content
   h1= title
   #message
+  ul
+    each user in users
+      li
+        a(href="mailto:#{user.email}") #{user.name}
